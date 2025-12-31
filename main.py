@@ -1,6 +1,4 @@
-import datetime
 import os
-import streamlit as st
 import streamlit as st
 from datetime import date
 def update_streak():
@@ -96,7 +94,7 @@ mood = st.sidebar.selectbox(
     ["Tired", "Normal", "Energetic"]
 )
 streak_count = update_streak()
-st.markdown(f"### 🔥 Your Current Study Streak: {streak_count} day(s)")
+st.markdown(f"### Your Current Study Streak: {streak_count} day(s)")
 if streak_count >= 3:
     st.balloons()  # fun celebration effect
 
