@@ -2,7 +2,6 @@ import os
 import streamlit as st
 from datetime import date
 def update_streak():
-   streak_count = update_streak()
     today = date.today()
 
     if "last_study_date" not in st.session_state:
