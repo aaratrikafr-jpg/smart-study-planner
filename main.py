@@ -2,19 +2,19 @@ import os
 import streamlit as st
 from datetime import date
 def update_streak():
-    today = date.today().isoformat()
+    today = date.today()
 
     if "last_study_date" not in st.session_state:
         st.session_state.last_study_date = today
         st.session_state.streak = 1
         return 1
 
-    if st.session_state.last_study_date == today:
+    last_date = st.session_state.last_study_date
+
+    if last_date == today:
         return st.session_state.streak
 
-    # If studied yesterday, increase streak
-    last_date = date.fromisoformat(st.session_state.last_study_date)
-    if (date.today() - last_date).days == 1:
+    if (today - last_date).days == 1:
         st.session_state.streak += 1
     else:
         st.session_state.streak = 1
