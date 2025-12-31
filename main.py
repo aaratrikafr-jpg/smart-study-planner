@@ -64,14 +64,12 @@ goal = st.sidebar.text_area("🎯 Goal for today")
 
 priority = st.sidebar.selectbox(
     "Priority level",
-    ["Low", "Medium", "High"]
+    ["Low","Medium","High"]
 )
-
 strength = st.sidebar.selectbox(
-    "📊 How strong are you in this subject?",
-    ["Weak", "Average", "Strong"]
+    "How strong are you in this subject?",
+    ["Weak","Average","Strong"]
 )
-
 mood = st.sidebar.selectbox(
     "😊 How are you feeling today?",
     ["Tired", "Normal", "Energetic"]
