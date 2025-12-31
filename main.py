@@ -120,7 +120,6 @@ elif streak_count >= 3:
 st.subheader("✨ Your Personalized Plan")
 
 if st.sidebar.button("🚀 Generate Plan"):
-    if st.sidebar.button("Generate Plan"):
     st.session_state.plans.append({
         "subject": subject,
         "hours": hours,
