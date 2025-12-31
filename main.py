@@ -1,5 +1,7 @@
 import streamlit as st
 from datetime import date
+if "plans" not in st.session_state:
+    st.session_state.plans = []
 
 def update_streak():
     today = date.today()
@@ -107,10 +109,25 @@ st.markdown(f"### Your Current Study Streak: {streak_count} day(s)")
 if streak_count >= 3:
     st.balloons()  # fun celebration effect
 
+streak_count = update_streak()
+
+if streak_count >= 7:
+    st.success("🚀 7-day streak! You're unstoppable.")
+elif streak_count >= 3:
+    st.info("🔥 Keep going! Momentum is building.")
+
 # ---------- MAIN ----------
 st.subheader("✨ Your Personalized Plan")
 
 if st.sidebar.button("🚀 Generate Plan"):
+    if st.sidebar.button("Generate Plan"):
+    st.session_state.plans.append({
+        "subject": subject,
+        "hours": hours,
+        "goal": goal
+    })
+
+    st.write("📚 Your Study Plan Saved!")
     priority = st.sidebar.selectbox(
         "📊 How strong are you in this subject?",
         ["Very Weak", "Weak", "Average", "Strong"]
