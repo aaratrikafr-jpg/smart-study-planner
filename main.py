@@ -219,3 +219,10 @@ if st.button("Save Reflection"):
         "date": str(date.today())
     })
     st.success("Reflection saved!")
+st.subheader("💬 Feedback")
+
+feedback = st.text_area("What do you think about this app?")
+rating = st.slider("Rate this app", 1, 5)
+
+if st.button("Submit Feedback"):
+    st.success("Thank you for your feedback! 💖")
