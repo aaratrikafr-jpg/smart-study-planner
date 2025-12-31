@@ -1,7 +1,7 @@
 import os
+st.write("update_streak exists:", "update_streak" in globals())
 import streamlit as st
 from datetime import date
-st.write("update_streak exists:", "update_streak" in globals())
 def update_streak():
     today = date.today()
 
@@ -11,6 +11,9 @@ def update_streak():
         return 1
 
     last_date = st.session_state.last_study_date
+
+    if isinstance(last_date, str):
+        last_date = date.fromisoformat(last_date)
 
     if last_date == today:
         return st.session_state.streak
