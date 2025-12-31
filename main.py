@@ -60,19 +60,20 @@ st.sidebar.header("🧠 Your Study Inputs")
 
 subject = st.sidebar.text_input("📘 Subject")
 hours = st.sidebar.slider("⏰ Hours available today", 1, 12, 3)
-goal = st.sidebar.text_area("Goal for today")
+goal = st.sidebar.text_area("🎯 Goal for today")
 
 priority = st.sidebar.selectbox(
     "Priority level",
     ["Low", "Medium", "High"]
 )
-    strength = st.sidebar.selectbox(
-    "How strong are you in this subject?",
+
+strength = st.sidebar.selectbox(
+    "📊 How strong are you in this subject?",
     ["Weak", "Average", "Strong"]
 )
 
 mood = st.sidebar.selectbox(
-    "🙂 How are you feeling today?",
+    "😊 How are you feeling today?",
     ["Tired", "Normal", "Energetic"]
 )
 streak_count = update_streak()
