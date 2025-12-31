@@ -1,6 +1,6 @@
-import os
 import streamlit as st
 from datetime import date
+
 def update_streak():
     today = date.today()
 
@@ -24,6 +24,12 @@ def update_streak():
 
     st.session_state.last_study_date = today
     return st.session_state.streak
+
+
+st.title("Smart Study Planner")
+
+streak_count = update_streak()
+st.write(f"🔥 Current streak: {streak_count}")
 st.set_page_config(page_title="Smart Study Planner", layout="centered")
 
 st.title("📚 Smart Study Planner")
