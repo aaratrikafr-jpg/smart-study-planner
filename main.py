@@ -66,8 +66,9 @@ priority = st.sidebar.selectbox(
     "Priority level",
     ["Low", "Medium", "High"]
 )
-    "📊 How strong are you in this subject?",
-    ["Very Weak", "Weak", "Average", "Strong"]
+    strength = st.sidebar.selectbox(
+    "How strong are you in this subject?",
+    ["Weak", "Average", "Strong"]
 )
 
 mood = st.sidebar.selectbox(
