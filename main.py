@@ -9,7 +9,7 @@ def update_streak():
         st.session_state.streak = 1
         return 1
 
-    last_date = st.session_state.last_study_date
+    last_date = date.fromisoformat(st.session_state.last_study_date)
 
     if last_date == today:
         return st.session_state.streak
