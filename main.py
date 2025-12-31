@@ -136,6 +136,15 @@ if st.sidebar.button("🚀 Generate Plan"):
         "🙂 How are you feeling today?",
         ["Tired", "Normal", "Energetic"]
     )
+    # 🎯 Personalization Logic
+st.subheader("🧠 Smart Suggestions")
+
+if mood == "Tired":
+    st.info("😴 You're feeling tired. Try light study sessions with breaks.")
+elif mood == "Normal":
+    st.success("🙂 Balanced mood detected. A steady study pace works best.")
+elif mood == "Energetic":
+    st.success("⚡ High energy! Perfect time for deep focus and tough subjects.")
     if subject and goal:
         st.success("Your plan is ready!")
 
@@ -202,3 +211,11 @@ if st.sidebar.button("🚀 Generate Plan"):
                 f.write(f"{today},{streak_count}")
 
             return streak_count
+reflection = st.text_area("📝 What did you learn today?")
+
+if st.button("Save Reflection"):
+    st.session_state.plans.append({
+        "reflection": reflection,
+        "date": str(date.today())
+    })
+    st.success("Reflection saved!")
