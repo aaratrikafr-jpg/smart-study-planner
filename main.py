@@ -60,7 +60,12 @@ st.sidebar.header("🧠 Your Study Inputs")
 
 subject = st.sidebar.text_input("📘 Subject")
 hours = st.sidebar.slider("⏰ Hours available today", 1, 12, 3)
-goal = st.sidebar.text_area("🎯 Goal for today")priority = st.sidebar.selectbox(
+goal = st.sidebar.text_area("Goal for today")
+
+priority = st.sidebar.selectbox(
+    "Priority level",
+    ["Low", "Medium", "High"]
+)
     "📊 How strong are you in this subject?",
     ["Very Weak", "Weak", "Average", "Strong"]
 )
