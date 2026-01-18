@@ -1,6 +1,6 @@
 import streamlit as st
-import csv
 import os
+import csv
 from datetime import date
 if "plans" not in st.session_state:
     st.session_state.plans = []
@@ -237,4 +237,11 @@ if st.button("Submit Feedback"):
         st.success("Thank you for your feedback! ❤️")
     else:
         st.warning("Please fill all fields.")
-        
+        st.subheader("🗂 All Feedbacks")
+
+if os.path.isfile("feedback.csv"):
+    import pandas as pd
+    df = pd.read_csv("feedback.csv")
+    st.dataframe(df)
+else:
+    st.info("No feedback yet!")
