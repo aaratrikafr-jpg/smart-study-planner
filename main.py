@@ -1,4 +1,6 @@
 import streamlit as st
+import csv
+import os
 from datetime import date
 if "plans" not in st.session_state:
     st.session_state.plans = []
@@ -219,10 +221,20 @@ if st.button("Save Reflection"):
         "date": str(date.today())
     })
     st.success("Reflection saved!")
-st.subheader("💬 Feedback")
+st.subheader("📝 Your Feedback")
 
-feedback = st.text_area("What do you think about this app?")
-rating = st.slider("Rate this app", 1, 5)
+name = st.text_input("Your Name")
+comment = st.text_area("Your Feedback")
 
 if st.button("Submit Feedback"):
-    st.success("Thank you for your feedback! 💖")
+    if name and comment:
+        file_exists = os.path.isfile("feedback.csv")
+        with open("feedback.csv", "a", newline="", encoding="utf-8") as f:
+            writer = csv.writer(f)
+            if not file_exists:
+                writer.writerow(["Name", "Comment", "Time"])
+            writer.writerow([name, comment, datetime.now().strftime("%Y-%m-%d %H:%M:%S")])
+        st.success("Thank you for your feedback! ❤️")
+    else:
+        st.warning("Please fill all fields.")
+        
