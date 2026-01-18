@@ -17,7 +17,6 @@ stickers = {
         "https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif"    # frog
     ]
  }
-{
 if "plans" not in st.session_state:
     st.session_state.plans = []
 if "reminder" not in st.session_state:
