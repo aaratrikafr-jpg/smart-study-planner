@@ -21,7 +21,7 @@ if "plans" not in st.session_state:
     st.session_state.plans = []
 if "reminder" not in st.session_state:
     st.session_state.reminder = ""
-}
+
 def update_streak():
     today = date.today()
 
