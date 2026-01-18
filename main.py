@@ -1,12 +1,26 @@
 import streamlit as st
 import os
+import random
 import csv
 from datetime import date, datetime
 if "plans" not in st.session_state:
     st.session_state.plans = []
 if "reminder" not in st.session_state:
     st.session_state.reminder = ""
-
+stickers = {
+    "Happy": [
+        "https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif",  # cat
+        "https://media.giphy.com/media/3oriO0O7FZq0W1z8J6/giphy.gif" # dog
+    ],
+    "Tired": [
+        "https://media.giphy.com/media/l0HlNQ03J5JxX6lva/giphy.gif", # sleepy cat
+        "https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif"  # panda
+    ],
+    "Stressed": [
+        "https://media.giphy.com/media/13borq7Zo2kulO/giphy.gif",  # hug cat
+        "https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif"    # frog
+    ]
+}
 def update_streak():
     today = date.today()
 
@@ -66,6 +80,8 @@ st.set_page_config(
     page_icon="📚",
     layout="centered"
 )
+st.markdown("<div class='big-title'>📚 Smart Study Planner</div>", unsafe_allow_html=True)
+st.markdown("<p class='small'>Plan smarter. Study better. Built by Aaratrika 💙</p>", unsafe_allow_html=True)
 st.markdown("""
 <style>
 .big-title {font-size:42px; color:#6C63FF; font-weight:800;}
@@ -120,13 +136,15 @@ mood = st.sidebar.selectbox(
     "😊 How are you feeling today?",
     ["Tired", "Normal", "Energetic"]
 )
+
 streak_count = update_streak()
 st.markdown(f"### Your Current Study Streak: {streak_count} day(s)")
 if streak_count >= 3:
     st.balloons()  # fun celebration effect
 
 streak_count = update_streak()
-
+if mood in stickers:
+    st.image(random.choice(stickers[mood]), width=250)
 if streak_count >= 7:
     st.success("🚀 7-day streak! You're unstoppable.")
 elif streak_count >= 3:
