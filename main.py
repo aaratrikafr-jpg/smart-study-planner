@@ -1,12 +1,8 @@
 import streamlit as st
 import os
-import random
 import csv
 from datetime import date, datetime
-if "plans" not in st.session_state:
-    st.session_state.plans = []
-if "reminder" not in st.session_state:
-    st.session_state.reminder = ""
+import random
 stickers = {
     "Happy": [
         "https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif",  # cat
@@ -20,6 +16,11 @@ stickers = {
         "https://media.giphy.com/media/13borq7Zo2kulO/giphy.gif",  # hug cat
         "https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif"    # frog
     ]
+}
+if "plans" not in st.session_state:
+    st.session_state.plans = []
+if "reminder" not in st.session_state:
+    st.session_state.reminder = ""
 }
 def update_streak():
     today = date.today()
