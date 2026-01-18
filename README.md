@@ -4,6 +4,8 @@ Smart Study Planner is a web-based productivity application built using Python a
 
 The app generates study plans based on user inputs such as available study time, subjects, priorities, and mood, while also tracking consistency through a study streak system.
 
+Built and deployed a Python-based study planning application, collected feedback from 7 users, and iteratively improved the product by adding gamified and UI-driven productivity features.
+
 ⸻
 
 🚀 Features
