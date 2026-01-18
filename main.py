@@ -4,6 +4,8 @@ import csv
 from datetime import date, datetime
 if "plans" not in st.session_state:
     st.session_state.plans = []
+if "reminder" not in st.session_state:
+    st.session_state.reminder = ""
 
 def update_streak():
     today = date.today()
@@ -64,7 +66,19 @@ st.set_page_config(
     page_icon="📚",
     layout="centered"
 )
+st.markdown("""
+<style>
+.big-title {font-size:42px; color:#6C63FF; font-weight:800;}
+.card {background:#F5F7FF; padding:18px; border-radius:14px; 
+       box-shadow: 0 4px 10px rgba(0,0,0,0.08); margin-bottom:15px;}
+.small {color:gray;}
+</style>
+""", unsafe_allow_html=True)
+st.subheader("🔔 Daily Study Reminder")
+st.session_state.reminder = st.text_input("Set your reminder message:")
 
+if st.session_state.reminder:
+    st.info(f"Reminder saved: {st.session_state.reminder}")
 # ---------- CUSTOM CSS ----------
 st.markdown("""
 <style>
@@ -118,6 +132,26 @@ if streak_count >= 7:
 elif streak_count >= 3:
     st.info("🔥 Keep going! Momentum is building.")
 
+import time
+
+st.subheader("⏱ Study Timer (Pomodoro)")
+
+focus_time = st.number_input("Focus minutes:", 10, 60, 25)
+break_time = st.number_input("Break minutes:", 5, 20, 5)
+
+if st.button("▶ Start Timer"):
+    st.info("Stay focused! 💪")
+    for i in range(focus_time * 60):
+        mins, secs = divmod(focus_time*60 - i, 60)
+        st.write(f"⏳ {mins:02d}:{secs:02d}")
+        time.sleep(1)
+        st.empty()
+
+    st.success("Break time! ☕")
+st.markdown("<div class='card'>", unsafe_allow_html=True)
+st.subheader("⏱ Focus Timer")
+# timer code here
+st.markdown("</div>", unsafe_allow_html=True)
 # ---------- MAIN ----------
 st.subheader("✨ Your Personalized Plan")
 
