@@ -128,12 +128,12 @@ if st.session_state.schedule:
     df = pd.DataFrame(st.session_state.schedule)
 
     def highlight(row):
-        if row["Type"] == "Study":
-            return ["background-color:#d0f0fd"] * len(row)
-        elif row["Type"] == "Revision":
-            return ["background-color:#d8f5d8"] * len(row)
-        else:
-            return ["background-color:#fff3cd"] * len(row)
+    if row["Type"] == "Study":
+        return ["background-color:#1f77b4; color:white"] * len(row)
+    elif row["Type"] == "Revision":
+        return ["background-color:#2ca02c; color:white"] * len(row)
+    else:
+        return ["background-color:#ff7f0e; color:black"] * len(row)
 
     st.dataframe(df.style.apply(highlight, axis=1), use_container_width=True)
     st.info("📌 Tip: Revise each chapter within 24 hours and again after 7 days for better retention.")
@@ -152,6 +152,13 @@ body {
 }
 h1, h2, h3 {
     color: #38bdf8;
+}
+</style>
+""", unsafe_allow_html=True)
+st.markdown("""
+<style>
+[data-testid="stAppViewContainer"] {
+    background-color: #ffffff;
 }
 </style>
 """, unsafe_allow_html=True)
