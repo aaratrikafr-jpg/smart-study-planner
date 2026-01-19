@@ -126,7 +126,7 @@ if st.button("➕ Add to Schedule"):
 
     if st.session_state.schedule:
     df = pd.DataFrame(st.session_state.schedule)
-    st.dataframe(df)
+    st.dataframe(df.style.apply(highlight, axis=1), use_container_width=True)
 else:
     st.warning("No study sessions added yet!")
         
