@@ -122,7 +122,7 @@ if st.button("➕ Add to Schedule"):
         "Type": stype
     })
     st.success("Added to your plan!")
-   import pandas as pd
+import pandas as pd
 
 if st.session_state.schedule:
     df = pd.DataFrame(st.session_state.schedule)
