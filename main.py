@@ -97,6 +97,7 @@ st.session_state.reminder = st.text_input("Set your reminder message:")
 
 if st.session_state.reminder:
     st.info(f"Reminder saved: {st.session_state.reminder}")
+   
     if "schedule" not in st.session_state:
         st.session_state.schedule = []
    
@@ -122,8 +123,8 @@ if st.button("➕ Add to Schedule"):
     st.success("Added to your plan!")
     import pandas as pd
 
-if st.session_state.schedule:
-    df = pd.DataFrame(st.session_state.schedule)
+    if st.session_state.schedule:
+        df = pd.DataFrame(st.session_state.schedule)
 
     def highlight(row):
         if row["Type"] == "Study":
