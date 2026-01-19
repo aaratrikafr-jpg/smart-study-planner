@@ -127,14 +127,14 @@ import pandas as pd
 if st.session_state.schedule:
     df = pd.DataFrame(st.session_state.schedule)
 
-    def highlight(row):
-        if row["Type"] == "Study":
-            return ["background-color:#1f77b4; color:white"] * len(row)
-        elif row["Type"] == "Revision":
-            return ["background-color:#2ca02c; color:white"] * len(row)
-        else:
-            return ["background-color:#ff7f0e; color:black"] * len(row)
-
+   def highlight(row):
+    if row["Type"] == "Study":
+        return ["background-color:#dbeafe; color:black"] * len(row)
+    elif row["Type"] == "Revision":
+        return ["background-color:#dcfce7; color:black"] * len(row)
+    else:
+        return ["background-color:#fef3c7; color:black"] * len(row)
+        
     st.dataframe(df.style.apply(highlight, axis=1), use_container_width=True)
     st.info("📌 Tip: Revise each chapter within 24 hours and again after 7 days for better retention.")
     
@@ -162,7 +162,13 @@ st.markdown("""
 }
 </style>
 """, unsafe_allow_html=True)
-
+st.markdown("""
+<style>
+table td, table th {
+    color: black !important;
+}
+</style>
+""", unsafe_allow_html=True)
 # ---------- HERO ----------
 st.title("📚 Smart Study Planner")
 st.caption("Study smarter, not longer. Built by Aaratrika 💙")
