@@ -134,7 +134,7 @@ if st.session_state.schedule:
             return ["background-color:#fff3cd"] * len(row)
 
     st.dataframe(df.style.apply(highlight, axis=1), use_container_width=True)
-  st.info("📌 Tip: Revise each chapter within 24 hours and again after 7 days for better retention.")  
+    st.info("📌 Tip: Revise each chapter within 24 hours and again after 7 days for better retention.")  
 # ---------- CUSTOM CSS ----------
 st.markdown("""
 <style>
