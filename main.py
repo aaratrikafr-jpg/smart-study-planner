@@ -21,6 +21,8 @@ if "plans" not in st.session_state:
     st.session_state.plans = []
 if "reminder" not in st.session_state:
     st.session_state.reminder = ""
+if "schedule" not in st.session_state:
+    st.session_state.schedule = []
 
 def update_streak():
     today = date.today()
@@ -88,7 +90,6 @@ st.markdown("""
 .big-title {font-size:42px; color:#6C63FF; font-weight:800;}
 .card {background:#F5F7FF; padding:18px; border-radius:14px; 
        box-shadow: 0 4px 10px rgba(0,0,0,0.08); margin-bottom:15px;}if "schedule" not in st.session_state:
-    st.session_state.schedule = []
 .small {color:gray;}
 </style>
 """, unsafe_allow_html=True)
@@ -124,7 +125,11 @@ if st.button("➕ Add to Schedule"):
     import pandas as pd
 
     if st.session_state.schedule:
-        df = pd.DataFrame(st.session_state.schedule)
+    df = pd.DataFrame(st.session_state.schedule)
+    st.dataframe(df)
+else:
+    st.warning("No study sessions added yet!")
+        
 
     def highlight(row):
         if row["Type"] == "Study":
