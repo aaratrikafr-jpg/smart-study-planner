@@ -98,7 +98,8 @@ st.session_state.reminder = st.text_input("Set your reminder message:")
 if st.session_state.reminder:
     st.info(f"Reminder saved: {st.session_state.reminder}")
     if "schedule" not in st.session_state:
-    st.session_state.schedule = []
+        st.session_state.schedule = []
+   
     st.subheader("📅 Build Your Study Schedule")
 
 col1, col2 = st.columns(2)
