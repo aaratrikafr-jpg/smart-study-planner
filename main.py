@@ -122,14 +122,10 @@ if st.button("➕ Add to Schedule"):
         "Type": stype
     })
     st.success("Added to your plan!")
-    import pandas as pd
+   import pandas as pd
 
-    if st.session_state.schedule:
+if st.session_state.schedule:
     df = pd.DataFrame(st.session_state.schedule)
-    st.dataframe(df.style.apply(highlight, axis=1), use_container_width=True)
-else:
-    st.warning("No study sessions added yet!")
-        
 
     def highlight(row):
         if row["Type"] == "Study":
@@ -139,6 +135,10 @@ else:
         else:
             return ["background-color:#fff3cd"] * len(row)
 
+    st.dataframe(df.style.apply(highlight, axis=1), use_container_width=True)
+
+else:
+    st.warning("No study sessions added yet!")
     st.dataframe(df.style.apply(highlight, axis=1), use_container_width=True)
     st.info("📌 Tip: Revise each chapter within 24 hours and again after 7 days for better retention.")  
 # ---------- CUSTOM CSS ----------
