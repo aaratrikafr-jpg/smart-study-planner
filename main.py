@@ -139,7 +139,7 @@ if st.session_state.schedule:
 
 else:
     st.warning("No study sessions added yet!")
-     st.dataframe(df.style.apply(highlight, axis=1), use_container_width=True)
+    st.dataframe(df.style.apply(highlight, axis=1), use_container_width=True)
     st.info("📌 Tip: Revise each chapter within 24 hours and again after 7 days for better retention.")  
 # ---------- CUSTOM CSS ----------
 st.markdown("""
