@@ -87,7 +87,8 @@ st.markdown("""
 <style>
 .big-title {font-size:42px; color:#6C63FF; font-weight:800;}
 .card {background:#F5F7FF; padding:18px; border-radius:14px; 
-       box-shadow: 0 4px 10px rgba(0,0,0,0.08); margin-bottom:15px;}
+       box-shadow: 0 4px 10px rgba(0,0,0,0.08); margin-bottom:15px;}if "schedule" not in st.session_state:
+    st.session_state.schedule = []
 .small {color:gray;}
 </style>
 """, unsafe_allow_html=True)
@@ -96,6 +97,43 @@ st.session_state.reminder = st.text_input("Set your reminder message:")
 
 if st.session_state.reminder:
     st.info(f"Reminder saved: {st.session_state.reminder}")
+    if "schedule" not in st.session_state:
+    st.session_state.schedule = []
+    st.subheader("📅 Build Your Study Schedule")
+
+col1, col2 = st.columns(2)
+start_time = col1.time_input("Start Time")
+end_time = col2.time_input("End Time")
+
+subject = st.text_input("Subject")
+topic = st.text_input("Chapter / Topic")
+
+stype = st.selectbox("Type", ["Study", "Revision", "Break"])
+
+if st.button("➕ Add to Schedule"):
+    st.session_state.schedule.append({
+        "Start": start_time.strftime("%H:%M"),
+        "End": end_time.strftime("%H:%M"),
+        "Subject": subject,
+        "Topic": topic,
+        "Type": stype
+    })
+    st.success("Added to your plan!")
+    import pandas as pd
+
+if st.session_state.schedule:
+    df = pd.DataFrame(st.session_state.schedule)
+
+    def highlight(row):
+        if row["Type"] == "Study":
+            return ["background-color:#d0f0fd"] * len(row)
+        elif row["Type"] == "Revision":
+            return ["background-color:#d8f5d8"] * len(row)
+        else:
+            return ["background-color:#fff3cd"] * len(row)
+
+    st.dataframe(df.style.apply(highlight, axis=1), use_container_width=True)
+  st.info("📌 Tip: Revise each chapter within 24 hours and again after 7 days for better retention.")  
 # ---------- CUSTOM CSS ----------
 st.markdown("""
 <style>
