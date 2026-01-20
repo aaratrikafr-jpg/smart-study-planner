@@ -8,6 +8,7 @@ Built and deployed a Python-based study planning application, collected feedback
 
 I built this web app to help students plan studies, stay consistent, and stay emotionally motivated using behavioral design and feedback-based iteration.
 
+Added interactive study schedule with UI styling and reminders.
 ⸻
 
 🚀 Features
