@@ -65,12 +65,11 @@ All requested features were implemented successfully.
 ---
 
 ## 🌍 Live Demo  
-🔗 [Add your Streamlit app link here]  
+🔗 https://smart-study-planner-x6appk2g4jvza6fefvzztfv.streamlit.app/
 
 ---
 
-## 📸 Screenshots  
-(Add screenshots here)  
+## 📸 Screenshots   
 - Schedule creation  
 - Color-coded timetable  
 - Mobile vs desktop view  
