@@ -169,6 +169,12 @@ table td, table th {
 }
 </style>
 """, unsafe_allow_html=True)
+st.markdown("""
+<style>
+thead th {color: white !important;}
+tbody td {color: white !important;}
+</style>
+""", unsafe_allow_html=True)
 # ---------- HERO ----------
 st.title("📚 Smart Study Planner")
 st.caption("Study smarter, not longer. Built by Aaratrika 💙")
