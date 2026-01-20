@@ -70,6 +70,14 @@ All requested features were implemented successfully.
 ---
 
 ## 📸 Screenshots   
+
+<img width="1730" height="851" alt="Screenshot 2026-01-20 121420" src="https://github.com/user-attachments/assets/b39940fb-ad50-4bfb-a9bc-5ff275db6b3b" />
+<img width="1319" height="879" alt="Screenshot 2026-01-20 121506" src="https://github.com/user-attachments/assets/e80446ae-fe9d-4fbd-bfb5-743178e3c829" />
+<img width="1315" height="888" alt="Screenshot 2026-01-20 121523" src="https://github.com/user-attachments/assets/fd4c76be-1884-46ed-8c19-90b02a38f932" />
+<img width="1202" height="801" alt="Screenshot 2026-01-20 121557" src="https://github.com/user-attachments/assets/634acdf1-8a7e-4ccc-814a-2c877892e44a" />
+<img width="1388" height="833" alt="Screenshot 2026-01-20 121619" src="https://github.com/user-attachments/assets/792e3d69-c03d-461b-904a-7f3898476edf" />
+<img width="1336" height="835" alt="Screenshot 2026-01-20 121642" src="https://github.com/user-attachments/assets/bf1b1f7c-67b8-404f-bc0e-c905ee0d54f4" />
+
 - Schedule creation  
 - Color-coded timetable  
 - Mobile vs desktop view  
