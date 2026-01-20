@@ -143,36 +143,19 @@ else:
 # ---------- CUSTOM CSS ----------
 st.markdown("""
 <style>
-body {
-    background-color: #0f172a;
-}
-.main {
+.stApp {
     background-color: #0f172a;
     color: white;
 }
-h1, h2, h3 {
-    color: #38bdf8;
+
+.stDataFrame td, .stDataFrame th {
+    color: white !important;
 }
-</style>
-""", unsafe_allow_html=True)
-st.markdown("""
-<style>
-[data-testid="stAppViewContainer"] {
-    background-color: #ffffff;
+
+.stDataFrame {
+    background-color: #020617;
 }
-</style>
-""", unsafe_allow_html=True)
-st.markdown("""
-<style>
-table td, table th {
-    color: black !important;
-}
-</style>
-""", unsafe_allow_html=True)
-st.markdown("""
-<style>
-thead th {color: white !important;}
-tbody td {color: white !important;}
+
 </style>
 """, unsafe_allow_html=True)
 # ---------- HERO ----------
