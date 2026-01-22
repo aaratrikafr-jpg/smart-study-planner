@@ -11,6 +11,8 @@ I built this web app to help students plan studies, stay consistent, and stay em
 Added interactive study schedule with UI styling and reminders.
 
 This project was built to help students plan realistic study schedules and stay consistent with their daily goals.
+
+Built by a student using real peer feedback.
 ⸻
 
 🚀 Features
