@@ -58,7 +58,7 @@ st.set_page_config(page_title="Smart Study Planner", layout="centered")
 st.title("📚 Smart Study Planner")
 st.write("Plan your study time smartly. Built by Aaratrika 💙")
 
-st.markdown("### 🧭 How to Use This Planner (Consistency System)")
+st.markdown("### 🧭 How the Consistency System Works?")
 
 st.markdown("""
 **Daily (5 minutes):**
@@ -154,7 +154,7 @@ if st.session_state.schedule:
     
 else:
     st.warning("No study sessions added yet!") 
-    st.markdown("### 🧠 Daily Reflection (Behavior Check)")
+    st.markdown("### 🧠 Behavior Reflection Check")
 
     distraction = st.text_input("What distracted you the most today?")
     realism = st.radio(
@@ -169,7 +169,7 @@ st.markdown("""
 - If focus drops, **reduce time**, don’t quit  
 - If burnout appears, **schedule recovery**, not punishment
 """)
-st.markdown("### 🔧 Consistency Adjustment")
+st.markdown("### 🔧 Adaptive Feedback Loop")
 
 if "skip_count" not in st.session_state:
     st.session_state.skip_count = 0
