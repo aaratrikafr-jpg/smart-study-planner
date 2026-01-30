@@ -79,6 +79,8 @@ All requested features were implemented successfully.
 <img width="1202" height="801" alt="Screenshot 2026-01-20 121557" src="https://github.com/user-attachments/assets/634acdf1-8a7e-4ccc-814a-2c877892e44a" />
 <img width="1388" height="833" alt="Screenshot 2026-01-20 121619" src="https://github.com/user-attachments/assets/792e3d69-c03d-461b-904a-7f3898476edf" />
 <img width="1336" height="835" alt="Screenshot 2026-01-20 121642" src="https://github.com/user-attachments/assets/bf1b1f7c-67b8-404f-bc0e-c905ee0d54f4" />
+<img width="724" height="545" alt="Screenshot 2026-01-30 113538" src="https://github.com/user-attachments/assets/f6e13e2d-1542-4732-ba92-27806f2e6098" />
+<img width="997" height="833" alt="Screenshot 2026-01-30 113608" src="https://github.com/user-attachments/assets/8b0346a4-f860-42ad-8ede-a0e07bc46851" />
 
 - Schedule creation  
 - Color-coded timetable  
