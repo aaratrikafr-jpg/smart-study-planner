@@ -58,6 +58,20 @@ st.set_page_config(page_title="Smart Study Planner", layout="centered")
 st.title("📚 Smart Study Planner")
 st.write("Plan your study time smartly. Built by Aaratrika 💙")
 
+st.markdown("### 🧭 How to Use This Planner (Consistency System)")
+
+st.markdown("""
+**Daily (5 minutes):**
+- Choose **1 priority task**
+- Follow time blocks (not perfection)
+- Complete the reflection after studying
+
+**Weekly (10 minutes):**
+- Review skipped or delayed tasks
+- Identify distraction patterns
+- Adjust next week’s plan realistically
+""")
+
 st.subheader("Enter your details")
 
 subject = st.text_input("Subject name")
@@ -140,6 +154,34 @@ if st.session_state.schedule:
     
 else:
     st.warning("No study sessions added yet!") 
+    st.markdown("### 🧠 Daily Reflection (Behavior Check)")
+
+    distraction = st.text_input("What distracted you the most today?")
+    realism = st.radio(
+       "Was today’s plan realistic for your energy level?",
+       ["Yes", "Somewhat", "No"]
+    )
+    adjustment = st.text_input("One small change you’ll make tomorrow:")
+    st.markdown("### 🔁 How This Planner Adapts")
+
+st.markdown("""
+- If a task is skipped **twice**, it should be simplified  
+- If focus drops, **reduce time**, don’t quit  
+- If burnout appears, **schedule recovery**, not punishment
+""")
+st.markdown("### 🔧 Consistency Adjustment")
+
+if "skip_count" not in st.session_state:
+    st.session_state.skip_count = 0
+
+if st.button("I skipped today’s main task"):
+    st.session_state.skip_count += 1
+
+if st.session_state.skip_count >= 2:
+    st.warning(
+        "This task has been skipped twice. "
+        "Consider breaking it into a smaller step tomorrow."
+    )
 # ---------- CUSTOM CSS ----------
 st.markdown("""
 <style>
