@@ -4,6 +4,8 @@ A student-built productivity web app powered by real feedback
 ## 🚀 Project Overview  
 Smart Study Planner is an interactive web application designed to help students plan their study sessions effectively using time-based scheduling, reminders, and a clean, colorful UI. I built this project after noticing that most students struggle with structuring their study time and staying consistent.
 
+I designed a Streamlit-based study planner that functions as a behavior consistency system. The system integrates structured planning, daily behavioral reflection, and adaptive iteration rules to help students overcome procrastination and build consistency. Based on user feedback and short-term testing, the planner adapts tasks when patterns of avoidance or burnout appear, encouraging sustainable study habits rather than rigid scheduling.
+
 What makes this project special is that it was iteratively improved using real student feedback and deployed publicly.
 
 ---
