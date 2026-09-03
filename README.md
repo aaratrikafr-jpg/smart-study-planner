@@ -1,65 +1,89 @@
-📘 Smart Study Planner
+# Smart Study Planner 🧠📚
 
-Smart Study Planner is a web-based productivity application built using Python and Streamlit that helps students plan their daily study routine in a more personalized and consistent way.
+A student-built study planning web app designed to help students turn available study time into a simple, manageable daily plan.
 
-The app generates study plans based on user inputs such as available study time, subjects, priorities, and mood, while also tracking consistency through a study streak system.
+Built with Python and Streamlit, the project was developed and improved through direct feedback from students.
 
-Built and deployed a Python-based study planning application, collected feedback from 11 users, and iteratively improved the product by adding gamified and UI-driven productivity features.
+🔗 **Live Demo:** https://smart-study-planner-x6appk2g4jvza6fefvzztfv.streamlit.app/
 
-I built this web app to help students plan studies, stay consistent, and stay emotionally motivated using behavioral design and feedback-based iteration.
+---
 
-Added interactive study schedule with UI styling and reminders.
+## 🎯 The Problem
 
-This project was built to help students plan realistic study schedules and stay consistent with their daily goals.
+Many students struggle with study planning—not because they don't want to study, but because planning itself can become overwhelming.
 
-Built by a student using real peer feedback.
-⸻
+Common problems include:
 
-🚀 Features
-	•	📅 Daily study planning
-	•	🧠 Mood-based personalization (low / neutral / motivated)
-	•	🔥 Study streak tracking for consistency
-	•	🎯 Goal-oriented task suggestions
-	•	✍ Reflection input for self-evaluation
-	•	📊 Simple feedback collection
+- Not knowing what to study first
+- Creating unrealistic timetables
+- Forgetting revision
+- Difficulty maintaining consistency
+- Feeling overwhelmed by complicated productivity tools
 
-⸻
+I wanted to explore whether a simpler, more student-friendly planning system could make studying easier to start and maintain.
 
-🛠 Tech Stack
-	•	Python
-	•	Streamlit
-	•	Session State for streak & persistence
-	•	Streamlit Cloud for deployment
+---
 
-⸻
+## 💡 The Solution
 
-💡 Motivation
+Smart Study Planner helps students create a structured study plan based on factors such as:
 
-I built this project after struggling to maintain a consistent study routine myself. Instead of using generic planners, I wanted something that adapts to how a student actually feels on a given day. This project allowed me to combine programming with real-life problem-solving.
+- Available study time
+- Subjects
+- Priorities
+- Current mood
+- Daily goals
 
-⸻
+The project also includes lightweight productivity and reflection features designed to encourage consistency without making the planning process unnecessarily complicated.
 
-🌍 Live Demo
+---
 
-🔗 https://smart-study-planner-x6appk2g4jvza6fefvzztfv.streamlit.app/
+## ✨ Features
 
-⸻
+- 📅 Daily study planning
+- ⏰ Time-based study schedules
+- 📚 Study, revision, and break categories
+- 🧠 Mood-based planning
+- 🔥 Study streak tracking
+- 🎯 Goal-oriented task suggestions
+- 📝 Daily reflection
+- 🔔 Study reminders
+- 🎨 Student-friendly visual interface
+- 📊 Interactive schedule display
 
-📸 Screenshots
+---
 
-Screenshots showing the UI, personalization logic, and generated plans are included in the repository.
+## 🧪 Testing & Student Feedback
 
-⸻
+The planner was shared with a small group of students to understand how students actually interact with a study-planning tool.
 
-📈 Future Improvements
-	•	Advanced analytics on study habits
-	•	Gamification with rewards
-	•	AI-based plan recommendations
-	•	User accounts & long-term progress tracking
+Feedback helped identify areas where students wanted:
 
-⸻
+- Timers and reminders
+- A clearer timetable
+- A more visual and engaging interface
+- A simpler overall experience
 
-🧑‍💻 Author
+The project was then iterated based on this feedback.
 
-Aaratrika
-High school student | Aspiring tech + entrepreneurship enthusiast
+This process helped me understand that building a useful product is not only about adding features—it is also about observing how real users behave and improving the product accordingly.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Python**
+- **Streamlit**
+- **Pandas**
+- **Streamlit Session State**
+- **Git & GitHub**
+- **Streamlit Cloud**
+
+---
+
+## 🚀 Running the Project Locally
+
+Clone the repository:
+
+```bash
+git clone https://github.com/aaratrikafr-jpg/smart-study-planner.git
