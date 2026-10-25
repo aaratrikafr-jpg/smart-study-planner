@@ -1,388 +1,478 @@
+
+import hashlib
+import secrets
+from datetime import date, timedelta
+
 import streamlit as st
-import os
-import csv
-from datetime import date, datetime
-import random
-stickers = {
-    "Happy": [
-        "https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif",  # cat
-        "https://media.giphy.com/media/3oriO0O7FZq0W1z8J6/giphy.gif" # dog
-    ],
-    "Tired": [
-        "https://media.giphy.com/media/l0HlNQ03J5JxX6lva/giphy.gif", # sleepy cat
-        "https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif"  # panda
-    ],
-    "Stressed": [
-        "https://media.giphy.com/media/13borq7Zo2kulO/giphy.gif",  # hug cat
-        "https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif"    # frog
-    ]
- }
-if "plans" not in st.session_state:
-    st.session_state.plans = []
-if "reminder" not in st.session_state:
-    st.session_state.reminder = ""
-if "schedule" not in st.session_state:
-    st.session_state.schedule = []
-
-def update_streak():
-    today = date.today()
-
-    if "last_study_date" not in st.session_state:
-        st.session_state.last_study_date = today
-        st.session_state.streak = 1
-        return 1
-
-    last_date = st.session_state.last_study_date
-
-    if isinstance(last_date, str):
-        last_date = date.fromisoformat(last_date)
-
-    if last_date == today:
-        return st.session_state.streak
-
-    if (today - last_date).days == 1:
-        st.session_state.streak += 1
-    else:
-        st.session_state.streak = 1
-
-    st.session_state.last_study_date = today
-    return st.session_state.streak
-
-
-st.title("Smart Study Planner")
-
-streak_count = update_streak()
-st.write(f"🔥 Current streak: {streak_count}")
-st.set_page_config(page_title="Smart Study Planner", layout="centered")
-
-st.title("📚 Smart Study Planner")
-st.write("Plan your study time smartly. Built by Aaratrika 💙")
-
-st.markdown("### 🧭 How the Consistency System Works?")
-
-st.markdown("""
-**Daily (5 minutes):**
-- Choose **1 priority task**
-- Follow time blocks (not perfection)
-- Complete the reflection after studying
-
-**Weekly (10 minutes):**
-- Review skipped or delayed tasks
-- Identify distraction patterns
-- Adjust next week’s plan realistically
-""")
-
-st.subheader("Enter your details")
-
-subject = st.text_input("Subject name")
-hours = st.number_input("Hours you can study today", min_value=0, max_value=24)
-goal = st.text_area("Your goal for this subject")
-
-if st.button("Generate Study Plan"):
-    if subject and hours > 0:
-        st.success("✅ Your Study Plan")
-        st.write(f"📌 Subject: *{subject}*")
-        st.write(f"⏰ Study Time: *{hours} hours*")
-        st.write("📝 Suggested Plan:")
-        st.write(f"- Revise basics of {subject}")
-        st.write(f"- Practice key problems for {hours//2} hours")
-        st.write(f"- Review mistakes and summarize notes")
-        st.write(f"🎯 Goal: {goal}")
-    else:
-        st.warning("Please enter subject and study hours.")
-import streamlit as st
+from supabase import create_client
 
 st.set_page_config(
     page_title="Smart Study Planner",
     page_icon="📚",
-    layout="centered"
+    layout="centered",
 )
-st.markdown("<div class='big-title'>📚 Smart Study Planner</div>", unsafe_allow_html=True)
-st.markdown("<p class='small'>Plan smarter. Study better. Built by Aaratrika 💙</p>", unsafe_allow_html=True)
-st.markdown("""
-<style>
-.big-title {font-size:42px; color:#6C63FF; font-weight:800;}
-.card {background:#F5F7FF; padding:18px; border-radius:14px; 
-       box-shadow: 0 4px 10px rgba(0,0,0,0.08); margin-bottom:15px;}if "schedule" not in st.session_state:
-.small {color:gray;}
-</style>
-""", unsafe_allow_html=True)
-st.subheader("🔔 Daily Study Reminder")
-st.session_state.reminder = st.text_input("Set your reminder message:")
 
-if st.session_state.reminder:
-    st.info(f"Reminder saved: {st.session_state.reminder}")
-   
-    if "schedule" not in st.session_state:
-        st.session_state.schedule = []
-   
-    st.subheader("📅 Build Your Study Schedule")
-
-col1, col2 = st.columns(2)
-start_time = col1.time_input("Start Time")
-end_time = col2.time_input("End Time")
-
-subject = st.text_input("Subject")
-topic = st.text_input("Chapter / Topic")
-
-stype = st.selectbox("Type", ["Study", "Revision", "Break"])
-
-if st.button("➕ Add to Schedule"):
-    st.session_state.schedule.append({
-        "Start": start_time.strftime("%H:%M"),
-        "End": end_time.strftime("%H:%M"),
-        "Subject": subject,
-        "Topic": topic,
-        "Type": stype
-    })
-    st.success("Added to your plan!")
-import pandas as pd
-
-if st.session_state.schedule:
-    df = pd.DataFrame(st.session_state.schedule)
-
-    def highlight(row):
-        if row["Type"] == "Study":
-            return ["background-color:#1e3a8a; color:white"] * len(row)
-        elif row["Type"] == "Revision":
-            return ["background-color:#065f46; color:white"] * len(row)
-        else:
-            return ["background-color:#92400e; color:white"] * len(row)
-        
-    st.dataframe(df.style.apply(highlight, axis=1), use_container_width=True)
-    st.info("📌 Tip: Revise each chapter within 24 hours and again after 7 days for better retention.")
-    
-else:
-    st.warning("No study sessions added yet!") 
-    st.markdown("### 🧠 Behavior Reflection Check")
-
-    distraction = st.text_input("What distracted you the most today?")
-    realism = st.radio(
-       "Was today’s plan realistic for your energy level?",
-       ["Yes", "Somewhat", "No"]
-    )
-    adjustment = st.text_input("One small change you’ll make tomorrow:")
-    st.markdown("### 🔁 How This Planner Adapts")
-
-st.markdown("""
-- If a task is skipped **twice**, it should be simplified  
-- If focus drops, **reduce time**, don’t quit  
-- If burnout appears, **schedule recovery**, not punishment
-""")
-st.markdown("### 🔧 Adaptive Feedback Loop")
-
-if "skip_count" not in st.session_state:
-    st.session_state.skip_count = 0
-
-if st.button("I skipped today’s main task"):
-    st.session_state.skip_count += 1
-
-if st.session_state.skip_count >= 2:
-    st.warning(
-        "This task has been skipped twice. "
-        "Consider breaking it into a smaller step tomorrow."
-    )
-# ---------- CUSTOM CSS ----------
 st.markdown("""
 <style>
 .stApp {
-    background-color: #0f172a;
-    color: white;
+    background: linear-gradient(145deg, #17172c, #292444, #172c40);
+    color: #f5f0ff;
 }
-
-.stDataFrame td, .stDataFrame th {
-    color: white !important;
+.block-container {
+    max-width: 850px;
+    padding-top: 2rem;
 }
-
-.stDataFrame {
-    background-color: #020617;
+h1, h2, h3 { color: #f7d9ff !important; }
+div.stButton > button[kind="primary"] {
+    background-color: #b49af7;
+    color: #17172c;
+    border-radius: 14px;
 }
-
 </style>
 """, unsafe_allow_html=True)
-# ---------- HERO ----------
+
 st.title("📚 Smart Study Planner")
-st.caption("Study smarter, not longer. Built by Aaratrika 💙")
+st.caption("Plan smarter, study better ✨ Built by Aaratrika")
+
+
+@st.cache_resource
+def get_db():
+    return create_client(
+        st.secrets["SUPABASE_URL"],
+        st.secrets["SUPABASE_SERVICE_ROLE_KEY"],
+    )
+
+
+def hash_code(code):
+    return hashlib.sha256(code.strip().encode()).hexdigest()
+
+
+def empty_data():
+    return {
+        "plans": [],
+        "schedule": [],
+        "reflections": [],
+        "reminder": "",
+        "completed_dates": [],
+        "skips": 0,
+    }
+
+
+def save_data():
+    get_db().table("planner_profiles").update({
+        "data": st.session_state.planner_data
+    }).eq("id", st.session_state.planner_id).execute()
+
+
+if "planner_id" not in st.session_state:
+    st.session_state.planner_id = None
+
+
+# CREATE OR RECOVER A PLANNER
+
+if st.session_state.planner_id is None:
+    st.info(
+        "Your planner is saved online. Keep your private recovery "
+        "code so you can reopen it on another visit or device."
+    )
+
+    new_tab, existing_tab = st.tabs(
+        ["🌸 Create planner", "🔑 Open saved planner"]
+    )
+
+    with new_tab:
+        if st.button("Create my planner", type="primary"):
+            recovery_code = secrets.token_urlsafe(32)
+            data = empty_data()
+
+            result = get_db().table("planner_profiles").insert({
+                "recovery_hash": hash_code(recovery_code),
+                "data": data,
+            }).execute()
+
+            st.session_state.planner_id = result.data[0]["id"]
+            st.session_state.planner_data = data
+            st.session_state.new_recovery_code = recovery_code
+            st.rerun()
+
+    with existing_tab:
+        with st.form("recover_planner"):
+            entered_code = st.text_input(
+                "Your recovery code",
+                type="password",
+            )
+            recover = st.form_submit_button("Open my planner")
+
+        if recover:
+            if not entered_code.strip():
+                st.warning("Enter your recovery code.")
+            else:
+                result = (
+                    get_db()
+                    .table("planner_profiles")
+                    .select("id,data")
+                    .eq("recovery_hash", hash_code(entered_code))
+                    .limit(1)
+                    .execute()
+                )
+
+                if result.data:
+                    profile = result.data[0]
+                    st.session_state.planner_id = profile["id"]
+                    st.session_state.planner_data = {
+                        **empty_data(),
+                        **profile["data"],
+                    }
+                    st.rerun()
+                else:
+                    st.error("Recovery code not found.")
+
+    st.stop()
+
+
+# SHOW NEW RECOVERY CODE ONCE
+
+if "new_recovery_code" in st.session_state:
+    st.success("Your planner has been created!")
+
+    st.warning(
+        "IMPORTANT: Copy this recovery code and store it privately. "
+        "It will not be displayed again."
+    )
+
+    st.code(st.session_state.new_recovery_code)
+
+    if st.button("I have saved my recovery code"):
+        del st.session_state.new_recovery_code
+        st.rerun()
+
+    st.stop()
+
+
+data = st.session_state.planner_data
+
+if st.sidebar.button("🔒 Close planner / switch profile"):
+    st.session_state.planner_id = None
+    st.session_state.pop("planner_data", None)
+    st.rerun()
+
+
+# STUDY STREAK
+
+st.header("🔥 Your study streak")
+
+completed_days = set(data["completed_dates"])
+today = date.today()
+
+cursor = (
+    today
+    if today.isoformat() in completed_days
+    else today - timedelta(days=1)
+)
+
+streak = 0
+
+while cursor.isoformat() in completed_days:
+    streak += 1
+    cursor -= timedelta(days=1)
+
+st.metric("Current streak", f"{streak} days")
+
+if today.isoformat() in completed_days:
+    st.success("You have completed a study session today! 🌟")
+else:
+    if st.button("I completed a study session today"):
+        data["completed_dates"].append(today.isoformat())
+        save_data()
+        st.rerun()
+
+
+# STUDY PLAN
+
+st.header("✨ Create your study plan")
+
+with st.form("create_plan"):
+    subject = st.text_input("Subject", max_chars=100)
+    goal = st.text_area("What do you want to complete?", max_chars=500)
+
+    hours = st.slider("Available study hours", 1, 12, 2)
+
+    priority = st.selectbox(
+        "Priority",
+        ["High", "Medium", "Low"],
+    )
+
+    confidence = st.selectbox(
+        "Your confidence",
+        ["Weak", "Average", "Strong"],
+    )
+
+    mood = st.selectbox(
+        "How are you feeling?",
+        ["😴 Tired", "🌷 Normal", "⚡ Energetic"],
+    )
+
+    generate = st.form_submit_button(
+        "Generate and save plan",
+        type="primary",
+    )
+
+if generate:
+    if not subject.strip() or not goal.strip():
+        st.warning("Please enter both a subject and a goal.")
+    else:
+        focus_minutes = (
+            20 if mood == "😴 Tired"
+            else 25 if mood == "🌷 Normal"
+            else 30
+        )
+
+        new_plan = {
+            "date": today.isoformat(),
+            "subject": subject.strip(),
+            "goal": goal.strip(),
+            "hours": hours,
+            "priority": priority,
+            "confidence": confidence,
+            "mood": mood,
+            "focus": focus_minutes,
+        }
+
+        data["plans"].insert(0, new_plan)
+        save_data()
+        st.success("Your plan has been saved permanently! 💜")
+
+st.subheader("📖 Saved study plans")
+
+if not data["plans"]:
+    st.caption("Your saved plans will appear here.")
+
+for i, plan in enumerate(data["plans"]):
+    with st.expander(
+        f"{plan['subject']} · {plan['date']}",
+        expanded=(i == 0),
+    ):
+        st.write(f"**Goal:** {plan['goal']}")
+        st.write(f"**Available time:** {plan['hours']} hours")
+        st.write(f"**Priority:** {plan['priority']}")
+        st.write(f"**Confidence:** {plan['confidence']}")
+        st.write(f"**Mood:** {plan['mood']}")
+
+        focus = plan["focus"]
+
+        st.markdown(
+            f"""
+**Suggested approach**
+
+1. Review important concepts for {focus} minutes.
+2. Practise questions in {focus}-minute focus blocks.
+3. Take short breaks between blocks.
+4. Review mistakes and summarise what you learned.
+"""
+        )
+
+        if st.button("Delete this plan", key=f"delete_plan_{i}"):
+            data["plans"].pop(i)
+            save_data()
+            st.rerun()
+
+
+# REMINDER
+
+st.header("🔔 My reminder")
+
+reminder = st.text_input(
+    "What should you remember?",
+    value=data["reminder"],
+    max_chars=300,
+)
+
+if st.button("Save reminder"):
+    data["reminder"] = reminder
+    save_data()
+    st.success("Reminder saved!")
+
+st.caption(
+    "This is a saved in-app reminder, not a phone notification."
+)
+
+
+# DAILY SCHEDULE
+
+st.header("📅 Study schedule")
+
+with st.form("add_schedule"):
+    col1, col2 = st.columns(2)
+
+    with col1:
+        start = st.time_input("Start time")
+
+    with col2:
+        end = st.time_input("End time")
+
+    topic = st.text_input("Subject or topic", max_chars=200)
+
+    session_type = st.selectbox(
+        "Session type",
+        ["Study", "Revision", "Break"],
+    )
+
+    add_session = st.form_submit_button("Add to schedule")
+
+if add_session:
+    if not topic.strip():
+        st.warning("Please enter a topic.")
+    elif start >= end:
+        st.warning("End time must be after start time.")
+    else:
+        data["schedule"].append({
+            "start": start.strftime("%H:%M"),
+            "end": end.strftime("%H:%M"),
+            "topic": topic.strip(),
+            "type": session_type,
+        })
+
+        save_data()
+        st.rerun()
+
+if not data["schedule"]:
+    st.caption("Your schedule will appear here.")
+
+for i, session in enumerate(data["schedule"]):
+    left, right = st.columns([5, 1])
+
+    left.write(
+        f"**{session['start']}–{session['end']}** · "
+        f"{session['topic']} ({session['type']})"
+    )
+
+    if right.button("✕", key=f"delete_session_{i}"):
+        data["schedule"].pop(i)
+        save_data()
+        st.rerun()
+
+
+# STUDY REFLECTIONS
+
+st.header("🧠 Before & after study reflection")
+
+with st.form("reflection_form"):
+    learned = st.text_area(
+        "What did you study or learn today?",
+        max_chars=2000,
+    )
+
+    distraction = st.text_input(
+        "What distracted you?",
+        max_chars=300,
+    )
+
+    realistic = st.selectbox(
+        "Was your study plan realistic?",
+        ["Yes", "Somewhat", "No"],
+    )
+
+    tomorrow = st.text_input(
+        "One improvement for tomorrow",
+        max_chars=300,
+    )
+
+    submit_reflection = st.form_submit_button(
+        "Save my reflection",
+        type="primary",
+    )
+
+if submit_reflection:
+    if not learned.strip():
+        st.warning("Write something about what you learned.")
+    else:
+        data["reflections"].insert(0, {
+            "date": today.isoformat(),
+            "learned": learned.strip(),
+            "distraction": distraction.strip(),
+            "realistic": realistic,
+            "change": tomorrow.strip(),
+        })
+
+        save_data()
+        st.success("Your reflection has been saved! 🌷")
+
+st.subheader("💭 Previous reflections")
+
+if not data["reflections"]:
+    st.caption("Your reflections will appear here.")
+
+for i, reflection in enumerate(data["reflections"]):
+    with st.expander(
+        f"Reflection · {reflection['date']} · #{i + 1}"
+    ):
+        st.write(reflection["learned"])
+
+        st.caption(
+            "Distraction: "
+            + (reflection["distraction"] or "Not recorded")
+        )
+
+        st.caption(
+            f"Was the plan realistic? {reflection['realistic']}"
+        )
+
+        st.caption(
+            "Improvement: "
+            + (reflection["change"] or "Not recorded")
+        )
+
+
+# ADAPTIVE STUDY CHECK
+
+st.header("🌱 Small steps matter")
+
+st.write(
+    f"Main task skipped: {data['skips']} time(s)"
+)
+
+if st.button("I skipped my main task"):
+    data["skips"] += 1
+    save_data()
+    st.rerun()
+
+if data["skips"] >= 2:
+    st.info(
+        "Try breaking your main task into one smaller, "
+        "more manageable step."
+    )
+
+
+# PRIVATE FEEDBACK
+
+st.header("💌 Feedback box")
+
+st.write(
+    "Share suggestions, problems or feedback about "
+    "the Smart Study Planner."
+)
+
+with st.form("feedback_form", clear_on_submit=True):
+    comment = st.text_area(
+        "Your feedback",
+        max_chars=2000,
+        placeholder="What worked? What could be improved?",
+    )
+
+    send_feedback = st.form_submit_button("Submit feedback")
+
+if send_feedback:
+    if not comment.strip():
+        st.warning("Please write your feedback first.")
+    else:
+        get_db().table("planner_feedback").insert({
+            "planner_id": st.session_state.planner_id,
+            "comment": comment.strip(),
+        }).execute()
+
+        st.success(
+            "Thank you! Your feedback has been saved privately. 💜"
+        )
 
 st.divider()
-
-# ---------- SIDEBAR ----------
-st.sidebar.header("🧠 Your Study Inputs")
-
-subject = st.sidebar.text_input("📘 Subject")
-hours = st.sidebar.slider("⏰ Hours available today", 1, 12, 3)
-goal = st.sidebar.text_area("🎯 Goal for today")
-
-priority = st.sidebar.selectbox(
-    "Priority level",
-    ["Low","Medium","High"]
-)
-strength = st.sidebar.selectbox(
-    "How strong are you in this subject?",
-    ["Weak","Average","Strong"]
-)
-mood = st.sidebar.selectbox(
-    "😊 How are you feeling today?",
-    ["Tired", "Normal", "Energetic"]
-)
-
-streak_count = update_streak()
-st.markdown(f"### Your Current Study Streak: {streak_count} day(s)")
-if streak_count >= 3:
-    st.balloons()  # fun celebration effect
-
-streak_count = update_streak()
-if mood in stickers:
-    st.image(random.choice(stickers[mood]), width=250)
-if streak_count >= 7:
-    st.success("🚀 7-day streak! You're unstoppable.")
-elif streak_count >= 3:
-    st.info("🔥 Keep going! Momentum is building.")
-
-import time
-
-st.subheader("⏱ Study Timer (Pomodoro)")
-
-focus_time = st.number_input("Focus minutes:", 10, 60, 25)
-break_time = st.number_input("Break minutes:", 5, 20, 5)
-
-if st.button("▶ Start Timer"):
-    st.info("Stay focused! 💪")
-    for i in range(focus_time * 60):
-        mins, secs = divmod(focus_time*60 - i, 60)
-        st.write(f"⏳ {mins:02d}:{secs:02d}")
-        time.sleep(1)
-        st.empty()
-
-    st.success("Break time! ☕")
-st.markdown("<div class='card'>", unsafe_allow_html=True)
-st.subheader("⏱ Focus Timer")
-# timer code here
-st.markdown("</div>", unsafe_allow_html=True)
-# ---------- MAIN ----------
-st.subheader("✨ Your Personalized Plan")
-
-if st.sidebar.button("🚀 Generate Plan"):
-    st.session_state.plans.append({
-        "subject": subject,
-        "hours": hours,
-        "goal": goal
-    })
-
-    st.write("📚 Your Study Plan Saved!")
-    priority = st.sidebar.selectbox(
-        "📊 How strong are you in this subject?",
-        ["Very Weak", "Weak", "Average", "Strong"]
-    )
-
-    mood = st.sidebar.selectbox(
-        "🙂 How are you feeling today?",
-        ["Tired", "Normal", "Energetic"]
-    )
-    # 🎯 Personalization Logic
-st.subheader("🧠 Smart Suggestions")
-
-if mood == "Tired":
-    st.info("😴 You're feeling tired. Try light study sessions with breaks.")
-elif mood == "Normal":
-    st.success("🙂 Balanced mood detected. A steady study pace works best.")
-elif mood == "Energetic":
-    st.success("⚡ High energy! Perfect time for deep focus and tough subjects.")
-    if subject and goal:
-        st.success("Your plan is ready!")
-
-        st.markdown(f"""
-        ### 📘 Subject: {subject}
-        ⏰ *Study Time:* {hours} hours  
-        🎯 *Goal:* {goal}
-        """)
-
-        st.markdown("### 📝 Suggested Plan")
-        st.write("• Revise core concepts")
-        st.write("• Practice important questions")
-        st.write("• Review mistakes")
-        st.write("• Quick recap + notes")
-
-    else:
-        st.warning("Please fill all the details 👀")
-        # ---------- STUDY SCORE ----------
-        score = 50
-
-        # hours impact
-        score += hours * 5
-
-        # priority impact
-        if priority in ["Very Weak", "Weak"]:
-            score += 15
-        elif priority == "Average":
-            score += 10
-        else:
-            score += 5
-
-        # mood impact
-        if mood == "Energetic":
-            score += 10
-        elif mood == "Tired":
-            score -= 5
-
-        # cap score
-        score = min(score, 100)
-        st.markdown("### 📊 Study Score")
-        st.progress(score)
-        st.write(f"*Your study effectiveness score: {score}/100*")
-        def update_streak():
-            streak_file = "streak.txt"
-            today = datetime.date.today().isoformat()
-
-            # if file exists
-            if os.path.exists(streak_file):
-                with open(streak_file, "r") as f:
-                    last_date, streak_count = f.read().split(",")
-                    streak_count = int(streak_count)
-
-                if last_date == today:
-                    return streak_count  # already counted today
-                elif datetime.date.fromisoformat(last_date) == datetime.date.today() - datetime.timedelta(days=1):
-                    streak_count += 1  # consecutive day
-                else:
-                    streak_count = 1  # streak reset
-            else:
-                streak_count = 1  # first time using
-
-            # save updated streak
-            with open(streak_file, "w") as f:
-                f.write(f"{today},{streak_count}")
-
-            return streak_count
-reflection = st.text_area("📝 What did you learn today?")
-
-if st.button("Save Reflection"):
-    st.session_state.plans.append({
-        "reflection": reflection,
-        "date": str(date.today())
-    })
-    st.success("Reflection saved!")
-st.subheader("📝 Your Feedback")
-
-name = st.text_input("Your Name")
-comment = st.text_area("Your Feedback")
-
-if st.button("Submit Feedback"):
-    if name and comment:
-        file_exists = os.path.isfile("feedback.csv")
-        with open("feedback.csv", "a", newline="", encoding="utf-8") as f:
-            writer = csv.writer(f)
-            if not file_exists:
-                writer.writerow(["Name", "Comment", "Time"])
-            writer.writerow([name, comment, datetime.now().strftime("%Y-%m-%d %H:%M:%S")])
-        st.success("Thank you for your feedback! ❤️")
-    else:
-        st.warning("Please fill all fields.")
-        st.subheader("🗂 All Feedbacks")
-
-if os.path.isfile("feedback.csv"):
-    import pandas as pd
-    df = pd.read_csv("feedback.csv")
-    st.dataframe(df)
-else:
-    st.info("No feedback yet!")
+st.caption("Made with curiosity, consistency and a little magic ✨")
