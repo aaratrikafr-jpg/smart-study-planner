@@ -15,21 +15,53 @@ st.set_page_config(
 st.markdown("""
 <style>
 .stApp {
-    background: linear-gradient(145deg, #17172c, #292444, #172c40);
-    color: #f5f0ff;
+    background:
+        radial-gradient(ellipse at 8% 5%, #c8d8ff 0%, transparent 48%),
+        radial-gradient(ellipse at 95% 12%, #f7c9e8 0%, transparent 48%),
+        radial-gradient(ellipse at 48% 52%, #fff8f0 0%, transparent 60%),
+        radial-gradient(ellipse at 8% 95%, #ffe4b9 0%, transparent 48%),
+        radial-gradient(ellipse at 95% 95%, #f6d0e5 0%, transparent 50%),
+        #f5efff;
+    background-attachment: fixed;
+    color: #34304a;
 }
+
 .block-container {
     max-width: 850px;
     padding-top: 2rem;
 }
-h1, h2, h3 { color: #f7d9ff !important; }
-div.stButton > button[kind="primary"] {
-    background-color: #b49af7;
-    color: #17172c;
+
+h1, h2, h3, p, label {
+    color: #34304a !important;
+}
+
+div[data-testid="stVerticalBlockBorderWrapper"] {
+    border-radius: 18px;
+}
+
+div[data-testid="stExpander"] {
+    background: rgba(255, 255, 255, 0.58);
     border-radius: 14px;
+}
+
+div.stButton > button[kind="primary"] {
+    background: #a995e8;
+    color: #ffffff;
+    border-radius: 14px;
+    border: none;
+}
+
+div.stButton > button:hover {
+    border-color: #a995e8;
+    color: #69529c;
+}
+
+section[data-testid="stSidebar"] {
+    background: rgba(244, 235, 255, 0.95);
 }
 </style>
 """, unsafe_allow_html=True)
+
 
 st.title("📚 Smart Study Planner")
 st.caption("Plan smarter, study better ✨ Built by Aaratrika")
